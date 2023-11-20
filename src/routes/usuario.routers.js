@@ -3,7 +3,7 @@ import { methods as usuariocontroller } from "../controollers/usuario.controller
 
 const router = Router();
 router.get("/", usuariocontroller.getUsuario);
-
+router.post("/", usuariocontroller.addUsuario);
 
 export default router;
 
