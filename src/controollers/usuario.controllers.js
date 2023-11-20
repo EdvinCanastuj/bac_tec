@@ -37,12 +37,41 @@ const addUsuario = async (req, res) => {
         res.status(500).json({ error: "Error interno del servidor" });
         }
     };
-    // metodo para actualizar
+
     
     // metodo para eliminar
-    
+    const deleteUsuario = async (req, res) => {
+        try {
+        const { id_usuario } = req.params;
+        const connection = await getConnection();
+        const result = await connection.query("DELETE FROM usuario WHERE id_usuario = ?;", [id_usuario]);
+        res.json(result);
+        } catch (error) {
+        res.status(500).send(error.message);
+        }
+    };
+    // metodo para actualizar
+    const updateUsuario = async (req, res) => {
+        try {
+        const { id_usuario } = req.params;
+        const { nombre,apellido,correo,cel,password,tipo_rol} = req.body;
+
+        if (!id_usuario || !nombre || !apellido || !correo || !cel || !password || !tipo_rol ) {
+            return res.status(400).json({ message: "Bad Request. Please fill all fields." });
+            
+        }
+        const usuario = { nombre,apellido,correo,cel,password,tipo_rol };
+        const connection = await getConnection();
+        const result = await connection.query("UPDATE usuario SET ? WHERE id_usuario = ?;", [usuario, id_usuario]);
+        res.json("updated successfully");
+        } catch (error) {
+        res.status(500).send(error.message);
+        }
+    };
 export const methods = {
     getUsuario, 
-    addUsuario
+    addUsuario,
+    deleteUsuario,
+    updateUsuario
     };
     
