@@ -40,7 +40,7 @@ const addUsuario = async (req, res) => {
 
     
     // metodo para eliminar
-    const deleteUsuario = async (req, res) => {
+const deleteUsuario = async (req, res) => {
         try {
         const { id_usuario } = req.params;
         const connection = await getConnection();
@@ -51,7 +51,7 @@ const addUsuario = async (req, res) => {
         }
     };
     // metodo para actualizar
-    const updateUsuario = async (req, res) => {
+const updateUsuario = async (req, res) => {
         try {
         const { id_usuario } = req.params;
         const { nombre,apellido,correo,cel,password,tipo_rol} = req.body;
@@ -73,5 +73,4 @@ export const methods = {
     addUsuario,
     deleteUsuario,
     updateUsuario
-    };
-    
+    }    
