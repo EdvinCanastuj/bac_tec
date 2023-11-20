@@ -1,5 +1,5 @@
 import { getConnection } from "./../db/database";
-
+// metodo para consulta
 const getRol = async (req, res) => {
 try {
     const connection = await getConnection();
@@ -9,6 +9,11 @@ try {
     res.status(500).send(error.message);
 }
 };
+// metodo para insertar
+
+// metodo para actualizar
+
+// metodo para eliminar
 
 export const methods = {
     getRol
