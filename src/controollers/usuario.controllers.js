@@ -68,9 +68,27 @@ const updateUsuario = async (req, res) => {
         res.status(500).send(error.message);
         }
     };
+    const loginUsuario = async (req, res) => {
+        try {
+            const { nombre_usuario, contrasena } = req.body;
+            const connection = await getConnection();
+            const result = await connection.query('SELECT * FROM usuario WHERE correo = ? AND password = ?', [nombre_usuario, contrasena]);
+        
+            if (result.length > 0) {
+                const usuario = result[0];
+                res.json({ message: "Acceso permitido", rol: usuario.tipo_rol, nombre: usuario.nombre, apellido: usuario.apellido, id_usuario: usuario.id_usuario});
+            } else {
+                res.status(401).json({ message: "Acceso denegado" });
+            }
+        } catch (error) {
+            res.status(500);
+            res.send(error.message);
+            }
+        };
 export const methods = {
     getUsuario, 
     addUsuario,
     deleteUsuario,
-    updateUsuario
+    updateUsuario,
+    loginUsuario
     }    

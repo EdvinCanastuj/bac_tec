@@ -6,7 +6,7 @@ const app = express();
 const cors = require('cors');
 
 // Settings
-app.set('port', 3000);
+app.set('port', 4000);
 //app.set('port', process.env.PORT || 3000);
 
 // Middlewares
