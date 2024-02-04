@@ -16,14 +16,15 @@ const getDemerito = async (req, res) => {
 }
 const addDemerito = async (req, res) => {
     try {
-        const { id_usuario, id_razon, fecha, id_estudiante, curso, cantidad } = req.body;
-        if (!id_usuario || !id_razon || !fecha || !id_estudiante || !curso || !cantidad) {
+        const { id_usuario, id_razon, id_estudiante, curso, cantidad } = req.body;
+        if (!id_usuario || !id_razon  || !id_estudiante || !curso || !cantidad) {
             res.status(400).json({ message: "Bad Request. Please fill all fields." });
             return;
         }
-        const demerito = { id_usuario, id_razon, fecha, id_estudiante, curso, cantidad};
         const connection = await getConnection();
-        const result = await connection.query("INSERT INTO demerito SET ?", demerito);
+        const sql = `INSERT INTO demerito (id_usuario, id_razon, fecha, id_estudiante, curso, cantidad) VALUES (?, ?, NOW(), ?, ?, ?);`;
+        const result = await connection.query(sql, [id_usuario, id_razon, id_estudiante, curso, cantidad]);
+
         res.json({ message: "Demerito Added" });
     } catch (error) {
         res.status(500).send(error.message);

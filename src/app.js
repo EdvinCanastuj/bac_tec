@@ -1,8 +1,10 @@
 import express from 'express';
 import morgan from 'morgan';
-import rolRouters from './routes/rol.routers.js';
-import usuarioRouters from './routes/usuario.routers.js';
-import demeritoRouters from './routes/demerito.routers.js';
+import rolRouters from './routes/rol.routes.js';
+import usuarioRouters from './routes/usuario.routes.js';
+import demeritoRouters from './routes/demerito.routes.js';
+import razonRouters from './routes/razon.routes.js';
+import estudianteRouters from './routes/estudiante.routes.js'; 
 const app = express();
 const cors = require('cors');
 
@@ -19,4 +21,7 @@ app.use(cors());
 app.use("/demerito", demeritoRouters);
 app.use("/rol", rolRouters);
 app.use("/usuario", usuarioRouters);
+app.use("/razon", razonRouters);
+app.use("/estudiante", estudianteRouters);
+
 export default app;
