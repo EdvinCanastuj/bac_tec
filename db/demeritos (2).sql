@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-01-2024 a las 07:10:58
+-- Tiempo de generación: 04-02-2024 a las 03:10:34
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -29,17 +29,25 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `demerito` (
   `id_demerito` int(11) NOT NULL,
-  `profesor` varchar(200) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `grado` varchar(50) NOT NULL,
   `id_razon` int(11) NOT NULL,
-  `estado` varchar(50) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `curso` varchar(50) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `nombre_estudiante` varchar(100) NOT NULL,
-  `apellido_estudiante` varchar(100) NOT NULL
+  `curso` varchar(100) NOT NULL,
+  `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `demerito`
+--
+
+INSERT INTO `demerito` (`id_demerito`, `id_usuario`, `fecha`, `id_razon`, `id_estudiante`, `curso`, `cantidad`) VALUES
+(1, 2, '2024-01-30', 1, 1, 'Tics', 2),
+(2, 1, '2024-01-02', 1, 1, 'Matematica', 2),
+(3, 2, '2024-01-30', 1, 1, 'Quimica', 5),
+(4, 1, '2024-02-01', 1, 1, 'Lenguage', 2),
+(5, 1, '2024-02-03', 1, 1, 'Ingles', 2),
+(6, 1, '2024-02-03', 1, 1, 'Sociales', 2);
 
 -- --------------------------------------------------------
 
@@ -49,10 +57,19 @@ CREATE TABLE `demerito` (
 
 CREATE TABLE `estudiante` (
   `id_estudiante` int(11) NOT NULL,
-  `nombres` varchar(100) NOT NULL,
-  `apellidos` varchar(100) NOT NULL,
-  `grado` int(11) NOT NULL
+  `nombres` varchar(200) NOT NULL,
+  `apellidos` varchar(200) NOT NULL,
+  `id_grado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `estudiante`
+--
+
+INSERT INTO `estudiante` (`id_estudiante`, `nombres`, `apellidos`, `id_grado`) VALUES
+(1, 'Luis', 'Pérez', 1),
+(2, 'María Lucia', 'Hernández López', 2),
+(3, 'Francisco Otoniel', 'Castro Perez', 1);
 
 -- --------------------------------------------------------
 
@@ -62,8 +79,16 @@ CREATE TABLE `estudiante` (
 
 CREATE TABLE `grado` (
   `id_grado` int(11) NOT NULL,
-  `Grado` varchar(200) NOT NULL
+  `grado` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `grado`
+--
+
+INSERT INTO `grado` (`id_grado`, `grado`) VALUES
+(1, 'Primero básico'),
+(2, 'Segundo básico');
 
 -- --------------------------------------------------------
 
@@ -73,14 +98,14 @@ CREATE TABLE `grado` (
 
 CREATE TABLE `historial` (
   `id_historial` int(11) NOT NULL,
-  `profesor` varchar(200) NOT NULL,
+  `id_profesor` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `nombre_estudiante` varchar(50) NOT NULL,
-  `apellido_estudiante` varchar(50) NOT NULL,
-  `grado` varchar(50) NOT NULL,
+  `id_estudiante` int(11) NOT NULL,
   `estado` varchar(50) NOT NULL,
+  `id_grado` int(11) NOT NULL,
+  `fecha_actualizado` date NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `curso` varchar(50) NOT NULL,
+  `curso` int(50) NOT NULL,
   `id_demerito` int(11) NOT NULL,
   `id_razon` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -95,6 +120,15 @@ CREATE TABLE `razon` (
   `id_razon` int(11) NOT NULL,
   `tipo_razon` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `razon`
+--
+
+INSERT INTO `razon` (`id_razon`, `tipo_razon`) VALUES
+(1, 'LLegada Tarde'),
+(2, 'Desorden'),
+(3, 'Irresponsabilidad');
 
 -- --------------------------------------------------------
 
@@ -149,15 +183,16 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `correo`, `cel`, `pas
 --
 ALTER TABLE `demerito`
   ADD PRIMARY KEY (`id_demerito`),
-  ADD UNIQUE KEY `id_razon` (`id_razon`),
-  ADD UNIQUE KEY `id_estudiante` (`id_estudiante`);
+  ADD KEY `id_usuario` (`id_usuario`,`id_razon`,`id_estudiante`),
+  ADD KEY `id_razon` (`id_razon`),
+  ADD KEY `id_estudiante` (`id_estudiante`);
 
 --
 -- Indices de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`id_estudiante`),
-  ADD UNIQUE KEY `grado` (`grado`);
+  ADD KEY `id_grado` (`id_grado`);
 
 --
 -- Indices de la tabla `grado`
@@ -170,7 +205,7 @@ ALTER TABLE `grado`
 --
 ALTER TABLE `historial`
   ADD PRIMARY KEY (`id_historial`),
-  ADD UNIQUE KEY `id_demerito` (`id_demerito`);
+  ADD KEY `id_demerito` (`id_demerito`);
 
 --
 -- Indices de la tabla `razon`
@@ -199,19 +234,19 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `demerito`
 --
 ALTER TABLE `demerito`
-  MODIFY `id_demerito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_demerito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `grado`
 --
 ALTER TABLE `grado`
-  MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_grado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `historial`
@@ -223,7 +258,7 @@ ALTER TABLE `historial`
 -- AUTO_INCREMENT de la tabla `razon`
 --
 ALTER TABLE `razon`
-  MODIFY `id_razon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_razon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -246,13 +281,14 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `demerito`
   ADD CONSTRAINT `demerito_ibfk_1` FOREIGN KEY (`id_razon`) REFERENCES `razon` (`id_razon`),
-  ADD CONSTRAINT `demerito_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`);
+  ADD CONSTRAINT `demerito_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`),
+  ADD CONSTRAINT `demerito_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 
 --
--- Filtros para la tabla `grado`
+-- Filtros para la tabla `estudiante`
 --
-ALTER TABLE `grado`
-  ADD CONSTRAINT `grado_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `estudiante` (`grado`);
+ALTER TABLE `estudiante`
+  ADD CONSTRAINT `estudiante_ibfk_1` FOREIGN KEY (`id_grado`) REFERENCES `grado` (`id_grado`);
 
 --
 -- Filtros para la tabla `historial`
