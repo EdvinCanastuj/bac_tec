@@ -1,9 +1,11 @@
-import { Router } from 'express';
-import { methods as estudiantecontrollers } from '../controollers/estudiante.controllers';
+import { Router } from "express";
+import { methods as estudiantecontroller } from "../controollers/estudiante.controllers";
 
 const router = Router();
-router.get('/', estudiantecontrollers.getEstudiante);
+router.get("/", estudiantecontroller.getEstudiante);
+router.get("/:id_grado", estudiantecontroller.getEstudianteById);
+router.post("/", estudiantecontroller.addEstudiante);
+router.delete("/:id_estudiante", estudiantecontroller.deleteEstudiante);
+router.put("/:id_estudiante", estudiantecontroller.updateEstudiante);
 
 export default router;
-
-

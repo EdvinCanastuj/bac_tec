@@ -1,4 +1,4 @@
-import { getConnection } from "./../db/database";
+import { getConnection } from "../db/database";
 // metodo para obtener
 const getEstudiante = async (req, res) => {
     try {
@@ -9,6 +9,16 @@ const getEstudiante = async (req, res) => {
         res.status(500).send(error.message);
     }
     };
+const getEstudianteById = async (req, res) => {
+    try {
+        const { id_grado } = req.params;
+        const connection = await getConnection();
+        const result = await connection.query("SELECT * FROM estudiante WHERE id_grado = ?;", [id_grado]);
+        res.json(result);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+    }
 // metodo para insertar
 const addEstudiante = async (req, res) => {
     try {
@@ -69,6 +79,7 @@ const updateEstudiante = async (req, res) => {
 
 export const methods = {
     getEstudiante,
+    getEstudianteById,
     addEstudiante,
     deleteEstudiante,
     updateEstudiante

@@ -5,6 +5,7 @@ import usuarioRouters from './routes/usuario.routes.js';
 import demeritoRouters from './routes/demerito.routes.js';
 import razonRouters from './routes/razon.routes.js';
 import estudianteRouters from './routes/estudiante.routes.js'; 
+import gradoRouters from './routes/grado.routes.js';
 const app = express();
 const cors = require('cors');
 
@@ -23,5 +24,5 @@ app.use("/rol", rolRouters);
 app.use("/usuario", usuarioRouters);
 app.use("/razon", razonRouters);
 app.use("/estudiante", estudianteRouters);
-
+app.use("/grado", gradoRouters);
 export default app;

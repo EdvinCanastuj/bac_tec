@@ -1,4 +1,4 @@
-import { getConnection } from "./../db/database";
+import { getConnection } from "../db/database";
 
 const getDemerito = async (req, res) => {
     try {
@@ -16,14 +16,14 @@ const getDemerito = async (req, res) => {
 }
 const addDemerito = async (req, res) => {
     try {
-        const { id_usuario, id_razon, id_estudiante, curso, cantidad } = req.body;
-        if (!id_usuario || !id_razon  || !id_estudiante || !curso || !cantidad) {
+        const { id_usuario, id_razon, id_estudiante, curso, cantidad, comentario } = req.body;
+        if (!id_usuario || !id_razon  || !id_estudiante || !curso || !cantidad || !comentario) {
             res.status(400).json({ message: "Bad Request. Please fill all fields." });
             return;
         }
         const connection = await getConnection();
-        const sql = `INSERT INTO demerito (id_usuario, id_razon, fecha, id_estudiante, curso, cantidad) VALUES (?, ?, NOW(), ?, ?, ?);`;
-        const result = await connection.query(sql, [id_usuario, id_razon, id_estudiante, curso, cantidad]);
+        const sql = `INSERT INTO demerito (id_usuario, id_razon, fecha, id_estudiante, curso, cantidad, comentario) VALUES (?, ?, NOW(), ?, ?, ?, ?);`;
+        const result = await connection.query(sql, [id_usuario, id_razon, id_estudiante, curso, cantidad, comentario]);
 
         res.json({ message: "Demerito Added" });
     } catch (error) {
