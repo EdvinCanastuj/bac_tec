@@ -3,7 +3,7 @@ import { getConnection } from "../db/database";
 const getDemerito = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT d.id_demerito,  u.nombre,  u.apellido, d.fecha, r.tipo_razon, e.nombres, e.apellidos, g.grado, d.curso, d.cantidad " +
+        const result = await connection.query("SELECT d.id_demerito,  CONCAT(u.nombre, ' ', u.apellido) AS Profesor, d.fecha, r.tipo_razon, CONCAT(e.nombres, ' ', e.apellidos) AS Estudiante, g.grado, d.curso, d.cantidad " +
         "FROM demerito d " +
         "INNER JOIN usuario u ON d.id_usuario = u.id_usuario " +
         "INNER JOIN razon r ON d.id_razon = r.id_razon " +
@@ -32,9 +32,9 @@ const addDemerito = async (req, res) => {
 }
 const deleteDemerito = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id_demerito } = req.params;
         const connection = await getConnection();
-        const result = await connection.query("DELETE FROM demerito WHERE id_demerito = ?;", [id]);
+        const result = await connection.query("DELETE FROM demerito WHERE id_demerito = ?;", [id_demerito]);
         res.json(result);
     } catch (error) {
         res.status(500).send(error.message);
