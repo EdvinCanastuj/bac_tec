@@ -11,6 +11,7 @@ const cors = require('cors');
 
 // Settings
 app.set('port', 4000);
+//estoe es para que el puerto sea dinamico si necsita desplegar en un servidor
 //app.set('port', process.env.PORT || 3000);
 
 // Middlewares
