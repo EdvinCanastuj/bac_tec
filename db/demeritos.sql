@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-02-2024 a las 03:10:34
+-- Tiempo de generación: 21-02-2024 a las 03:44:34
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,20 +34,29 @@ CREATE TABLE `demerito` (
   `id_razon` int(11) NOT NULL,
   `id_estudiante` int(11) NOT NULL,
   `curso` varchar(100) NOT NULL,
-  `cantidad` int(11) NOT NULL
+  `cantidad` int(11) NOT NULL,
+  `comentario` varchar(100) NOT NULL,
+  `id_estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado`
+--
+
+CREATE TABLE `estado` (
+  `id_estado` int(11) NOT NULL,
+  `estado` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `demerito`
+-- Volcado de datos para la tabla `estado`
 --
 
-INSERT INTO `demerito` (`id_demerito`, `id_usuario`, `fecha`, `id_razon`, `id_estudiante`, `curso`, `cantidad`) VALUES
-(1, 2, '2024-01-30', 1, 1, 'Tics', 2),
-(2, 1, '2024-01-02', 1, 1, 'Matematica', 2),
-(3, 2, '2024-01-30', 1, 1, 'Quimica', 5),
-(4, 1, '2024-02-01', 1, 1, 'Lenguage', 2),
-(5, 1, '2024-02-03', 1, 1, 'Ingles', 2),
-(6, 1, '2024-02-03', 1, 1, 'Sociales', 2);
+INSERT INTO `estado` (`id_estado`, `estado`) VALUES
+(1, 'Finalizado'),
+(2, 'En Proceso');
 
 -- --------------------------------------------------------
 
@@ -101,13 +110,13 @@ CREATE TABLE `historial` (
   `id_profesor` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `id_estudiante` int(11) NOT NULL,
-  `estado` varchar(50) NOT NULL,
-  `id_grado` int(11) NOT NULL,
+  `id_estado` varchar(50) NOT NULL,
   `fecha_actualizado` date NOT NULL,
   `cantidad` int(11) NOT NULL,
   `curso` int(50) NOT NULL,
   `id_demerito` int(11) NOT NULL,
-  `id_razon` int(11) NOT NULL
+  `id_razon` int(11) NOT NULL,
+  `comentario` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -171,7 +180,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `correo`, `cel`, `password`, `tipo_rol`) VALUES
-(1, 'Edvin', 'Canastuj', 'edvin@gmail.com', 12345678, '123', 1),
+(1, 'Edvin Juan', 'Canastuj Vasquez', 'edvin@gmail.com', 12345678, '123', 1),
 (2, 'Fer', 'Sic', 'fer@gmail.com', 12345678, '123', 2);
 
 --
@@ -185,7 +194,14 @@ ALTER TABLE `demerito`
   ADD PRIMARY KEY (`id_demerito`),
   ADD KEY `id_usuario` (`id_usuario`,`id_razon`,`id_estudiante`),
   ADD KEY `id_razon` (`id_razon`),
-  ADD KEY `id_estudiante` (`id_estudiante`);
+  ADD KEY `id_estudiante` (`id_estudiante`),
+  ADD KEY `id_estado` (`id_estado`);
+
+--
+-- Indices de la tabla `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`id_estado`);
 
 --
 -- Indices de la tabla `estudiante`
@@ -234,7 +250,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `demerito`
 --
 ALTER TABLE `demerito`
-  MODIFY `id_demerito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_demerito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `estudiante`
@@ -282,7 +304,8 @@ ALTER TABLE `usuario`
 ALTER TABLE `demerito`
   ADD CONSTRAINT `demerito_ibfk_1` FOREIGN KEY (`id_razon`) REFERENCES `razon` (`id_razon`),
   ADD CONSTRAINT `demerito_ibfk_2` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiante` (`id_estudiante`),
-  ADD CONSTRAINT `demerito_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `demerito_ibfk_3` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `demerito_ibfk_4` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`);
 
 --
 -- Filtros para la tabla `estudiante`

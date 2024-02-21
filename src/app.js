@@ -6,6 +6,8 @@ import demeritoRouters from './routes/demerito.routes.js';
 import razonRouters from './routes/razon.routes.js';
 import estudianteRouters from './routes/estudiante.routes.js'; 
 import gradoRouters from './routes/grado.routes.js';
+import estadoRouters from './routes/estado.routes.js';
+import historialRouters from './routes/historial.routes.js';
 const app = express();
 const cors = require('cors');
 
@@ -20,6 +22,8 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
+app.use("/historial", historialRouters);
+app.use("/estado", estadoRouters);
 app.use("/demerito", demeritoRouters);
 app.use("/rol", rolRouters);
 app.use("/usuario", usuarioRouters);
