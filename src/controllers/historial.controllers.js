@@ -3,7 +3,7 @@ import { getConnection } from "../db/database";
 const getHistorial = async (req, res) => {
     try {
         const connection = await getConnection();
-        const result = await connection.query("SELECT h.id_historial, h.fecha_actualizado AS Ultima_Modificacion, d.fecha AS Creado, d.curso, d.cantidad, d.comentario, CONCAT( u.nombre,' ', u.apellido) AS Profesor, r.tipo_razon, es.estado, CONCAT(e.nombres,' ', e.apellidos) AS Estudiante, g.grado FROM historial h "+ 
+        const result = await connection.query("SELECT h.id_historial, DATE_FORMAT(h.fecha_actualizado, '%y-%m-%d') AS Ultima_Modificacion, DATE_FORMAT(h.fecha, '%y-%m-%d') AS Creado, h.curso, h.cantidad, h.comentario, CONCAT( u.nombre,' ', u.apellido) AS Profesor, r.tipo_razon, es.estado, CONCAT(e.nombres,' ', e.apellidos) AS Estudiante, g.grado FROM historial h "+ 
         "INNER JOIN demerito d ON h.id_demerito = d.id_demerito "+
         "INNER JOIN usuario u ON d.id_usuario = u.id_usuario "+
         "INNER JOIN razon r ON d.id_razon = r.id_razon "+
