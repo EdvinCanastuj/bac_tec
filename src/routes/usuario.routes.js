@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { methods as usuariocontroller } from "../controollers/usuario.controllers";
+import { methods as usuariocontroller } from "../controllers/usuario.controllers.js";
 
 const router = Router();
 router.get("/", usuariocontroller.getUsuario);

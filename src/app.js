@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import rolRouters from './routes/rol.routes.js';
 import usuarioRouters from './routes/usuario.routes.js';
 import demeritoRouters from './routes/demerito.routes.js';
@@ -9,7 +10,6 @@ import gradoRouters from './routes/grado.routes.js';
 import estadoRouters from './routes/estado.routes.js';
 import historialRouters from './routes/historial.routes.js';
 const app = express();
-const cors = require('cors');
 
 // Settings
 app.set('port', 4000);

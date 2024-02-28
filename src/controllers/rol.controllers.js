@@ -1,4 +1,5 @@
-import { getConnection } from "../db/database";
+import { methods as getConnection } from "../db/database.js";
+
 // metodo para consulta
 const getRol = async (req, res) => {
 try {

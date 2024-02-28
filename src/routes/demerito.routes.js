@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { methods as demeritocontroller } from "../controollers/demerito.controllers";
+import { methods as demeritocontroller } from "../controllers/demerito.controllers.js";
 
 const router = Router();
 router.get("/", demeritocontroller.getDemerito);

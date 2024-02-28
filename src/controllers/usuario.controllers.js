@@ -1,4 +1,4 @@
-import { getConnection } from "../db/database";
+import { methods as getConnection } from "../db/database.js";
 const getUsuario = async (req, res) => {
     try {
         const connection = await getConnection();

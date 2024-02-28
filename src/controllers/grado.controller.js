@@ -1,4 +1,4 @@
-import { getConnection } from '../db/database';
+import { methods as getConnection } from '../db/database.js';
 
 const getIdGrado = async (req, res) => {
     try {

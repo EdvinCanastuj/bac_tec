@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { methods as rolcontroller } from "../controollers/rol.controllers";
+import { methods as rolcontroller } from "../controllers/rol.controllers.js";
 
 // consultar, insertar, actualizar y eliminar
 const router = Router();
