@@ -1,6 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+import cookieParser from 'cookie-parser';
 import rolRouters from './routes/rol.routes.js';
 import usuarioRouters from './routes/usuario.routes.js';
 import demeritoRouters from './routes/demerito.routes.js';
@@ -11,8 +14,11 @@ import estadoRouters from './routes/estado.routes.js';
 import historialRouters from './routes/historial.routes.js';
 const app = express();
 
+
+
 // Settings
 app.set('port', 4000);
+
 //estoe es para que el puerto sea dinamico si necsita desplegar en un servidor
 //app.set('port', process.env.PORT || 3000);
 
@@ -20,6 +26,8 @@ app.set('port', 4000);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
+
 
 // Routes
 app.use("/historial", historialRouters);
