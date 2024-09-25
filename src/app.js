@@ -13,12 +13,8 @@ import gradoRouters from './routes/grado.routes.js';
 import estadoRouters from './routes/estado.routes.js';
 import historialRouters from './routes/historial.routes.js';
 const app = express();
-
-
-
 // Settings
 app.set('port', 4000);
-
 //estoe es para que el puerto sea dinamico si necsita desplegar en un servidor
 //app.set('port', process.env.PORT || 3000);
 
@@ -27,6 +23,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+
+app.use('/api/signout', require('./routes/signout.routes.js'));
+app.use('/api/todos', require('./routes/todos.routes.js'));
+app.use('/api/refreshToken', require('./routes/refreshToken.routes.js'));
+app.use('/api/login', require('./routes/login.routes.js'));
 
 
 // Routes
