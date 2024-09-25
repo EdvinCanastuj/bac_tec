@@ -1,6 +1,7 @@
-exports.jsonResponse = function (statusCode, body) {
-        return {
-            statusCode,
-            body,
-        };
-};
+import { jsonResponse } from './jsonResponse.js';
+export function jsonResponse(statusCode, body) {
+    return {
+        statusCode,
+        body,
+    };
+}

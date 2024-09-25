@@ -12,6 +12,10 @@ import estudianteRouters from './routes/estudiante.routes.js';
 import gradoRouters from './routes/grado.routes.js';
 import estadoRouters from './routes/estado.routes.js';
 import historialRouters from './routes/historial.routes.js';
+import signoutRouters from './routes/signout.routes.js';
+import todosRouters from './routes/todos.routes.js';
+import refreshTokenRouters from './routes/refreshTocken.routes.js';
+import loginRouters from './routes/login.routes.js';
 const app = express();
 // Settings
 app.set('port', 4000);
@@ -24,11 +28,14 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
-app.use('/api/signout', require('./routes/signout.routes.js'));
-app.use('/api/todos', require('./routes/todos.routes.js'));
-app.use('/api/refreshToken', require('./routes/refreshToken.routes.js'));
-app.use('/api/login', require('./routes/login.routes.js'));
-
+// app.use('/api/signout', require('./routes/signout.routes.js'));
+// app.use('/api/todos', require('./routes/todos.routes.js'));
+// app.use('/api/refreshToken', require('./routes/refreshToken.routes.js'));
+// app.use('/api/login', require('./routes/login.routes.js'));
+app.use('/api/signout', signoutRouters);
+app.use('/api/todos', todosRouters);
+app.use('/api/refreshToken', refreshTokenRouters);
+app.use('/api/login', loginRouters);
 
 // Routes
 app.use("/historial", historialRouters);

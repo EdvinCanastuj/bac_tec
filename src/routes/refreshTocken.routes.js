@@ -1,6 +1,9 @@
-const router = require('express').Router();
+import { Router } from 'express';
+
+const router = Router();
+
 router.get("/", (req, res) => {
-    res.send("refresh token");
-}
-);
-module.exports = router;
+    res.send("refreshtoken");
+});
+
+export default router;
